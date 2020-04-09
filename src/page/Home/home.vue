@@ -42,11 +42,11 @@
       <section class="w mt30 clearfix" v-if="item.type === 3">
         <y-shelf :title="item.name">
           <div slot="content" class="floors" >
-            <div class="imgbanner" v-for="(iitem,j) in item.panelContentItems" :key="j" v-if="iitem.type === 2 || iitem.type === 3" @click="linkTo(iitem)">
+            <div class="imgbanner" v-for="(iitem,j) in item.panelContentItems" :key="j" v-if="iitem.type === 2" @click="linkTo(iitem)">
               <img v-lazy="iitem.picUrl">
               <a class="cover-link"></a>
             </div>
-            <mall-goods :msg="iitem" v-for="(iitem,j) in item.panelContentItems" :key="j+'key'" v-if="iitem.type != 2 && iitem.type != 3"></mall-goods>
+            <mall-goods :msg="iitem" v-for="(iitem,j) in item.panelContentItems" :key="j+'key'" v-if="iitem.type !== 2"></mall-goods>
           </div>
         </y-shelf>
       </section>

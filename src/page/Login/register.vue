@@ -3,7 +3,7 @@
     <div class="wrapper">
       <div class="dialog dialog-shadow" style="display: block; margin-top: -362px;">
         <div class="registered">
-          <h4>注册 咕泡商城 账号</h4>
+          <h4>注册 苏南商城 账号</h4>
           <div class="content" style="margin-top: 20px;">
             <ul class="common-form">
               <li class="username border-1p">
@@ -25,6 +25,13 @@
                   <input type="password"
                          v-model="registered.userPwd2"
                          placeholder="重复密码">
+                </div>
+              </li>
+              <li>
+                <div class="input">
+                  <input type="email"
+                         v-model="registered.email"
+                         placeholder="邮箱">
                 </div>
               </li>
               <li>
@@ -53,7 +60,7 @@
             <ul class="common-form pr">
               <!-- <li class="pa" style="left: 0;top: 0;margin: 0;color: #d44d44">{{registered.errMsg}}</li> -->
               <li style="text-align: center;line-height: 48px;margin-bottom: 0;font-size: 15px;color: #999;">
-                <span>如果您已拥有 <span style="color:royalblue">咕泡商城</span> 账号，则可在此</span>
+                <span>如果您已拥有 <span style="color:royalblue">苏南商城</span> 账号，则可在此</span>
                 <a href="javascript:;"
                    style="margin: 0 5px"
                    @click="toLogin">登录</a>
@@ -87,7 +94,8 @@ export default {
         userPwd: '',
         userPwd2: '',
         errMsg: '',
-        captcha: ''
+        captcha: '',
+        email:''
       },
       imageCode: '',
       agreement: false,
@@ -129,6 +137,7 @@ export default {
       let userPwd = this.registered.userPwd
       let userPwd2 = this.registered.userPwd2
       let captcha = this.registered.captcha
+      let email = this.registered.email
       if (!userName || !userPwd || !userPwd2) {
         this.message('账号密码不能为空!')
         this.registxt = '注册'
@@ -149,9 +158,16 @@ export default {
         this.registxt = '注册'
         return false
       }
+      let emailRegex = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+      console.log(email);
+      if(!emailRegex.test(email)){
+        this.message('邮箱格式错误')
+        return false
+      }
       register({
         userName,
         userPwd,
+        email,
         captcha}).then(res => {
           if (res.success === true) {
             this.messageSuccess()

@@ -1,5 +1,6 @@
 const BASE_URL = "api"
 export const apis = {
+  userVerify: BASE_URL + '/user/verify',
   userLogin: BASE_URL + '/user/login',
   loginOut: BASE_URL + '/user/loginOut',
   userInfo: BASE_URL + '/user/login',

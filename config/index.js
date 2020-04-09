@@ -30,7 +30,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://127.0.0.1:8081',  // 请求本地 需要咕泡商城后台项目 默认127.0.0.1:8082,
+        target: 'http://127.0.0.1:8081',  // 请求本地 需要苏南商城后台项目 默认127.0.0.1:8082,
         pathRewrite:{
           "^/api":""
         }

@@ -50,7 +50,7 @@ const whiteList = ['/home', '/goods', '/login', '/register', '/product', '/thank
 router.beforeEach(function (to, from, next) {
     let token = getToken()
     if (!token) { // 没登录
-      if (whiteList.indexOf(to.path) !== -1) { // 白名单
+      if (whiteList.indexOf(to.path) !== -1 || to.path.startsWith('/verify')) { // 白名单
         next()
       } else {
         next('/login')

@@ -3,7 +3,7 @@
     <div class="wrapper">
       <div class="dialog dialog-shadow" style="display: block; margin-top: -362px;">
         <div class="title">
-          <h4>使用 咕泡商城 账号 登录</h4>
+          <h4>使用 苏南商城 账号 登录</h4>
         </div>
         <div v-if="loginPage" class="content">
           <ul class="common-form">
@@ -207,6 +207,10 @@ export default {
     this.getRemembered()
     this.login_addCart()
     this.init_geetest()
+
+    if (this.$route.params.source){
+      this.$message.success("邮箱验证成功，请登录")
+    }
     // this.open('登录提示', '测试体验账号密码：test | test')
   },
   components: {
@@ -254,18 +258,18 @@ export default {
   margin-left: -225px;
   position: absolute;
   .title {
-    background: linear-gradient(#fff, #f5f5f5);
+    /*background: linear-gradient(#fff, #f5f5f5);*/
     height: auto;
     overflow: visible;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     position: relative;
-    background-image: url(/static/images/logo_login.png);
-    background-size: 240px;
-    background-position: top center;
-    background-repeat: no-repeat;
+    /*background-image: url(/static/images/logo_login.png);*/
+    /*background-size: 240px;*/
+    /*background-position: top center;
+    background-repeat: no-repeat;*/
     height: 92px;
     margin: 23px 0 50px;
-    padding: 75px 0 0;
+    /*padding: 75px 0 0;*/
     box-shadow: none;
     h4 {
       padding: 0;

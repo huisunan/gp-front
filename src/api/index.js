@@ -1,6 +1,11 @@
 import http from './public'
 import {apis} from './api'
 
+//验证
+export const userVerify = (params) =>{
+  return http.fetchGet(apis.userVerify,params)
+}
+
 // 登陆
 export const userLogin = (params) => {
   return http.fetchPost(apis.userLogin, params)
