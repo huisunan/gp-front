@@ -36,9 +36,9 @@ export const apis = {
   payMent: BASE_URL + '/cashier/pay',
   orderList: BASE_URL + '/shopping/order',
   getOrderDet: BASE_URL + '/shopping/order',
-  cancelOrder: BASE_URL + '/shopping/cancelOrder',
+  cancelOrder: BASE_URL + '/shopping/order',
   productDet: BASE_URL + '/shopping/product',
-  delOrder: BASE_URL + '/shopping/delOrder',
+  delOrder: BASE_URL + '/shopping/order',
   getSearch: BASE_URL + '/shopping/search',
   getQuickSearch: BASE_URL + '/shopping/search',
   initKaptcha: BASE_URL + '/user/kaptcha'

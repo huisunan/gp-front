@@ -32,6 +32,7 @@ export default {
       let timer = setInterval(function () {
         let nowTime = new Date()
         let t = timestamp - nowTime.getTime()
+        console.log(t);
         if (t > 0) {
           let day = Math.floor(t / 86400000)
           let hour = Math.floor((t / 3600000) % 24)
@@ -70,5 +71,5 @@ export default {
 }
 </script>
 <style lang='scss' rel='stylesheet/scss' scoped>
-  
+
 </style>

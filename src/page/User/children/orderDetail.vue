@@ -3,8 +3,8 @@
     <y-shelf v-bind:title="orderTitle">
       <div slot="content">
         <div v-loading="loading" element-loading-text="加载中..." style="min-height: 10vw;" v-if="orderList.length">
-          <div class="orderStatus" v-if="orderStatus !== -1 && orderStatus !== 6">
-            <el-steps :space="200" :active="orderStatus">
+          <div class="orderStatus" v-if="orderStatus !== 8">
+            <el-steps :space="200" :active="orderStatus + 1">
               <el-step title="下单" v-bind:description="createTime"></el-step>
               <el-step title="付款" v-bind:description="payTime"></el-step>
               <el-step title="配货" description=""></el-step>
@@ -12,7 +12,7 @@
               <el-step title="交易成功" v-bind:description="finishTime"></el-step>
             </el-steps>
           </div>
-          <div class="orderStatus-close" v-if="orderStatus === -1">
+          <div class="orderStatus-close" v-if="orderStatus === 8">
             <el-steps :space="780" :active="2">
               <el-step title="下单" v-bind:description="createTime"></el-step>
               <el-step title="交易关闭" v-bind:description="closeTime"></el-step>
@@ -24,7 +24,7 @@
               <el-step title="交易关闭" v-bind:description="closeTime"></el-step>
             </el-steps>
           </div>
-          <div class="status-now" v-if="orderStatus === 1">
+          <div class="status-now" v-if="orderStatus === 0">
             <ul>
               <li class="status-title"><h3>订单状态：待付款</h3></li>
               <li class="button">
@@ -38,7 +38,7 @@
               <span>，超时后订单将自动取消。</span>
             </p>
           </div>
-          <div class="status-now" v-if="orderStatus === 2">
+          <div class="status-now" v-if="orderStatus === 1">
             <ul>
               <li class="status-title"><h3>订单状态：已支付，待系统审核确认</h3></li>
             </ul>
@@ -46,7 +46,7 @@
               <span>请耐心等待审核，审核结果将发送到您的邮箱，并且您所填写的捐赠数据将显示在捐赠表中。</span>
             </p>
           </div>
-          <div class="status-now" v-if="orderStatus === -1 || orderStatus === 6">
+          <div class="status-now" v-if=" orderStatus === 8">
             <ul>
               <li class="status-title"><h3>订单状态：已关闭</h3></li>
             </ul>
@@ -54,7 +54,7 @@
               <span>您的订单已关闭。</span>
             </p>
           </div>
-          <div class="status-now" v-if="orderStatus === 5">
+          <div class="status-now" v-if="orderStatus === 4">
             <ul>
               <li class="status-title"><h3>订单状态：已完成</h3></li>
             </ul>
@@ -78,14 +78,14 @@
           <!--商品-->
           <div class="goods-table">
             <div class="cart-items" v-for="(item,i) in orderList" :key="i">
-              <a @click="goodsDetails(item.productId)" class="img-box"><img :src="item.productImg" alt=""></a>
+              <a @click="goodsDetails(item.productId)" class="img-box"><img :src="item.picPath" alt=""></a>
               <div class="name-cell ellipsis">
-                <a @click="goodsDetails(item.productId)" title="" target="_blank">{{item.productName}}</a>
+                <a @click="goodsDetails(item.productId)" title="" target="_blank">{{item.title}}</a>
               </div>
               <div class="n-b">
-                <div class="price">¥ {{Number(item.salePrice).toFixed(2)}}</div>
-                <div class="goods-num">{{item.productNum}}</div>
-                <div class="subtotal"> ¥ {{Number(item.salePrice * item.productNum).toFixed(2)}}</div>
+                <div class="price">¥ {{Number(item.price).toFixed(2)}}</div>
+                <div class="goods-num">{{item.num}}</div>
+                <div class="subtotal"> ¥ {{Number(item.price * item.num).toFixed(2)}}</div>
               </div>
             </div>
           </div>
@@ -165,17 +165,7 @@
           }
         }
         getOrderDet(params).then(res => {
-          if (res.result.orderStatus === '0') {
-            this.orderStatus = 1
-          } else if (res.result.orderStatus === '1') {
-            this.orderStatus = 2
-          } else if (res.result.orderStatus === '4') {
-            this.orderStatus = 5
-          } else if (res.result.orderStatus === '5') {
-            this.orderStatus = -1
-          } else if (res.result.orderStatus === '6') {
-            this.orderStatus = 6
-          }
+          this.orderStatus = res.result.status
           this.orderList = res.result.goodsList
           this.orderTotal = res.result.orderTotal
           this.userName = res.result.addressInfo.userName
@@ -183,12 +173,13 @@
           this.streetName = res.result.addressInfo.streetName
           this.createTime = res.result.createDate
           this.closeTime = res.result.closeDate
-          this.payTime = res.result.payDate
-          if (this.orderStatus === 5) {
+          this.payTime = res.result.payTime
+          this.countTime = res.result.countTime
+          /*if (this.orderStatus === 5) {
             this.finishTime = res.result.finishDate
           } else {
             this.countTime = res.result.finishDate
-          }
+          }*/
           this.loading = false
         })
       },

@@ -207,9 +207,11 @@ export default {
     this.getRemembered()
     this.login_addCart()
     this.init_geetest()
-
-    if (this.$route.params.source){
+    const source = this.$route.params.source
+    if (source === 'verify'){
       this.$message.success("邮箱验证成功，请登录")
+    }else if (source === 'expire'){
+      this.$message.success("身份信息过期，请重新登录")
     }
     // this.open('登录提示', '测试体验账号密码：test | test')
   },

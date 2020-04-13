@@ -22,7 +22,7 @@
                     <div class="cart-items clearfix">
                       <!--勾选-->
                       <div class="items-choose">
-                      <span class="blue-checkbox-new " :class="{'checkbox-on':item.checked === 'true'}"
+                      <span class="blue-checkbox-new " :class="{'checkbox-on':item.checked === true}"
                             @click="editCart('check',item)"></span>
                       </div>
                       <!--图片-->
@@ -144,7 +144,7 @@
       checkedCount () {
         var i = 0
         this.cartList && this.cartList.forEach((item) => {
-          if (item.checked === 'true') i++
+          if (item.checked === true) i++
         })
         return Number(i)
       },
@@ -160,7 +160,7 @@
       checkPrice () {
         var totalPrice = 0
         this.cartList && this.cartList.forEach(item => {
-          if (item.checked === 'true') {
+          if (item.checked === true) {
             totalPrice += (item.productNum * item.salePrice)
           }
         })
@@ -170,7 +170,7 @@
       checkNum () {
         var checkNum = 0
         this.cartList && this.cartList.forEach(item => {
-          if (item.checked === 'true') {
+          if (item.checked === true) {
             checkNum += (item.productNum)
           }
         })
@@ -225,7 +225,7 @@
           let productNum = item.productNum
           // 勾选
           if (type === 'check') {
-            let newChecked = checked === 'true' ? 'false' : 'true'
+            let newChecked = checked !== true
             this._cartEdit(this.userId, productId, productNum, newChecked)
           }
         } else {
@@ -244,13 +244,17 @@
       checkout () {
         this.checkoutNow = '结算中...'
         this.submit = false
-        this.$router.push({path: 'checkout'})
+        this.$router.push({
+          name: 'checkout',
+          params: {
+            source: 'cart'
+          }})
       },
       delChecked () {
         getCartList().then(res => {
           if (res.success === true) {
             res.result.forEach(item => {
-              if (item.checked === 'true') {
+              if (item.checked === true) {
                 let productId = item.productId
                 this.EDIT_CART({productId})
               }

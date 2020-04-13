@@ -51,7 +51,7 @@
                 <span class="price">单价</span>
               </div>
               <!--列表-->
-              <div class="cart-table" v-for="(item,i) in cartList" :key="i" v-if="item.checked == 'true'">
+              <div class="cart-table" v-for="(item,i) in cartList" :key="i" v-if="item.checked">
                 <div class="cart-group divide pr" :data-productid="item.productId">
                   <div class="cart-top-items">
                     <div class="cart-items clearfix">
@@ -119,7 +119,6 @@
             <el-input type="number" placeholder="手机号码" v-model="msg.tel"></el-input>
           </div>
           <!--      数据源 https://github.com/wecatch/china_regions/tree/master/json    -->
-          <!--        TODO 地址模块的同学mysql创建字典表-->
           <!--        <div>-->
           <!--          <input type="text" placeholder="收货地址" v-model="msg.streetName">-->
           <!--        </div>-->
@@ -217,7 +216,8 @@
         cityId: null,
         provinceId: null,
         districtId: null,
-        address: ''  // 街道
+        address: '',  // 街道,
+        from:1
       }
     },
     computed: {
@@ -347,7 +347,8 @@
           streetName: this.streetName,
           cartProductDtoList: array,
           addressId: this.addressId,
-          orderTotal: this.orderTotal
+          orderTotal: this.orderTotal,
+          from:this.from
         }
         submitOrder(params).then(res => {
           if (res.success === true) {
@@ -411,7 +412,7 @@
       _productDet (productId) {
         productDet({params: {productId}}).then(res => {
           let item = res.result
-          item.checked = 'true'
+          item.checked = true
           item.productImg = item.productImageBig
           item.productNum = this.num
           item.productPrice = item.salePrice
@@ -469,6 +470,9 @@
         this._productDet(this.productId)
       } else {
         this._getCartList()
+      }
+      if (query.source ==='cart'){
+        this.from = 0
       }
       this.provinceList = provinceList
       this.cityList = []

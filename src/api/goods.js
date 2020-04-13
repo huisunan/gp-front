@@ -87,7 +87,8 @@ export const getOrderDet = (params) => {
 }
 // 取消订单
 export const cancelOrder = (params) => {
-  return http.fetchPost(apis.cancelOrder, params)
+  console.log(params);
+  return http.fetchPut(apis.cancelOrder + '/'+params.orderId, null)
 }
 // 商品详情
 export const productDet = (params) => {
@@ -95,7 +96,7 @@ export const productDet = (params) => {
 }
 // 删除订单
 export const delOrder = (params) => {
-  return http.fetchGet(apis.delOrder, params)
+  return http.fetchDelete(apis.delOrder + '/'+params.params.orderId, null)
 }
 // 商品列表
 export const getSearch = (params) => {

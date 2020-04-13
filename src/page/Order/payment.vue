@@ -4,7 +4,7 @@
       <div slot="content">
         <div class="box-inner order-info">
           <h3>提交订单成功，请选择支付方式</h3>
-          <p class="payment-detail">请在 <span>2 小时内</span>完成支付，超时订单将自动取消。</p>
+          <p class="payment-detail">请在 <span>15 分钟内</span>完成支付，超时订单将自动取消。</p>
           <p class="payment-detail">我们不会在您完成支付后的 72 小时内发货，您的支付将用作捐赠</p>
         </div>
         <!--支付方式-->
@@ -142,13 +142,23 @@
         const info = this.cartList[0].title
         payMent({
           nickName: this.userName,
-          money: this.money,
+          money: this.orderTotal,
           info: info,
           orderId: this.orderId,
           payType: this.type
         }).then(res => {
           if (res.success === true) {
-            if (this.payType === 1) {
+            this.$message.success("支付成功！请等待发货")
+            setTimeout(()=>{
+              this.$router.push({
+                name:"paysuccess",
+                query:{
+                  price:this.orderTotal
+                }
+              })
+            },3000)
+          }
+            /*if (this.payType === 1) {
               const div = document.createElement('div')
               div.innerHTML = res.result
               document.body.appendChild(div)
@@ -164,7 +174,7 @@
             this.payNow = '立刻支付'
             this.submit = true
             this.messageFail(res.message)
-          }
+          }*/
         })
       },
       isMoney (v) {

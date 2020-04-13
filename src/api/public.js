@@ -8,8 +8,14 @@ axios.interceptors.response.use(
     //003009
     if (response.data.code === '003009'){
         expireAction()
-        window.location.href = '/#/login'
-        alert("身份过期，请重新登录")
+        this.$router.push({
+          name: 'login',
+          params: {
+            source: 'expire'
+          }
+        })
+
+
       }
       return response
     },error=>{
